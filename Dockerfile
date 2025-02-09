@@ -7,9 +7,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 # RUN pip install --no-cache-dir debugpy  # <---- Install debugpy
 
+COPY . .
+
+
 EXPOSE 5000
 
 VOLUME [ "/app" ]
 
 # CMD ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "app.py"]
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
