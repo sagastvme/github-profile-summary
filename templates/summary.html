@@ -125,12 +125,12 @@
               <!-- Markdown & Copy Button -->
               <div style="margin-top: 5px;">
                   <code id="markdownText" style="background: rgba(255, 255, 255, 0.1); padding: 5px 8px; border-radius: 5px; font-size: 12px; display: inline-block;">
-                      ![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')
+                      ![Graph]({{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }})
                   </code>
-                  <button onclick="copyMarkdown(event)" data-link="![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')" class="copy-btn button">
+                  <button onclick="copyMarkdown(event)" data-link="![Graph]({{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }})" class="copy-btn button">
                       📋 Copy
                   </button>
-                  <span type="text" id="markdownInput" value="![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')" readonly style="position: absolute; left: -9999px;"/>
+                  <span type="text" id="markdownInput" value="![Graph]({{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }})" readonly style="position: absolute; left: -9999px;"/>
               </div>
           </div>
                
