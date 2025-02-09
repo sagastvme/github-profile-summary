@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+  <title>GitHub Profile Summary</title>
+  <meta name="description" content="Generate a summary of any GitHub user's profile">
+
+{% endblock %}
+
+{% block body %}
+<body class="flex">
+
+  <header role="banner">
+    <div>
+      <h1>GitHub Profile Summary</h1>
+    </div>
+  </header>
+
+  <main id="maincontent" role="main">
+    <form 
+      hx-boost="true" 
+      action="/summary" 
+      method="get" 
+      hx-push-url="true"
+      aria-labelledby="form-heading"
+    >
+      <label class="sr-only" for="username">Enter GitHub Username</label>
+      <!-- From Uiverse.io by ainasoa --> 
+      <input 
+        placeholder="Github username" 
+        id="username" 
+        type="text" 
+        required 
+        aria-required="true" 
+        autocomplete="username" 
+        name="username" 
+        class="input"
+      >
+      <button class="button" type="submit">
+        Generate Summary
+      </button>
+    </form>
+  </main>
+</body>
+{% endblock %}

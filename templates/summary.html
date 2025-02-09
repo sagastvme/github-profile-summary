@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block extra_head %}
+  <title>{{ username }}'s GitHub Summary</title>
+{% endblock %}
+
+{% block body %}
+<body class="flex">
+  <main>
+    {% if data %}
+
+      <!-- Container wrapping header and user data -->
+      <div class="profile_info">
+        <header class="profile_header">   
+          <h1>Profile summary for {{ username }}</h1>
+          <img src="{{ data['avatar_url'] }}" id="profile_pic" alt="{{ username }}'s profile picture" class="profile-img">
+          
+          <!-- GitHub link -->
+          <a href="{{ data.html_url }}" class="button github_link"> 
+            <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+              <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+              <g id="SVGRepo_iconCarrier"> 
+                <title>github</title> 
+                <rect fill="none" height="24" width="24"></rect> 
+                <path d="M12,2A10,10,0,0,0,8.84,21.5c.5.08.66-.23.66-.5V19.31C6.73,19.91,6.14,18,6.14,18A2.69,2.69,0,0,0,5,16.5c-.91-.62.07-.6.07-.6a2.1,2.1,0,0,1,1.53,1,2.15,2.15,0,0,0,2.91.83,2.16,2.16,0,0,1,.63-1.34C8,16.17,5.62,15.31,5.62,11.5a3.87,3.87,0,0,1,1-2.71,3.58,3.58,0,0,1,.1-2.64s.84-.27,2.75,1a9.63,9.63,0,0,1,5,0c1.91-1.29,2.75-1,2.75-1a3.58,3.58,0,0,1,.1,2.64,3.87,3.87,0,0,1,1,2.71c0,3.82-2.34,4.66-4.57,4.91a2.39,2.39,0,0,1,.69,1.85V21c0,.27.16.59.67.5A10,10,0,0,0,12,2Z"></path> 
+              </g>
+            </svg>
+            {{ username }}'s Github 
+          </a>
+
+          <!-- "Back Home" link, directly under the GitHub link -->
+          <a href="/" class="home_link">Go Back Home</a>
+        </header>
+
+        <section class="user_data">
+          <h2>User data</h2>
+          
+          {% macro get_value(dict_obj, key) -%}
+            {%- set value = dict_obj.get(key) -%}
+            {{ value if value is not none else "Not Available" }}
+          {%- endmacro %}
+          
+          <ul>
+            <!-- Basic info -->
+            <li><strong>Name:</strong> {{ get_value(data, 'name') }}</li>
+            <li><strong>Bio:</strong> {{ get_value(data, 'bio') }}</li>
+            <li><strong>Company:</strong> {{ get_value(data, 'company') }}</li>
+            <li><strong>Email:</strong> {{ email or "Not Available" }}</li>
+            <li><strong>Location:</strong> {{ get_value(data, 'location') }}</li>
+            
+            <!-- Social / Contact -->
+            <li><strong>X/Twitter username:</strong> {{ get_value(data, 'twitter_username') }}</li>
+            <li>
+              <strong>Blog:</strong>
+              {% if data.get('blog') %}
+                <a href="{{ data.get('blog') }}" target="_blank" rel="noopener noreferrer">
+                  {{ username }}'s Blog
+                </a>
+              {% else %}
+                Not Available
+              {% endif %}
+            </li>
+            <li><strong>Hireable:</strong> {{ get_value(data, 'hireable') }}</li>
+            
+            <!-- Stats -->
+            <li><strong>Public repos:</strong> {{ get_value(data, 'public_repos') }}</li>
+            <li><strong>Public gists:</strong> {{ get_value(data, 'public_gists') }}</li>
+            <li><strong>Followers:</strong> {{ get_value(data, 'followers') }}</li>
+            <li><strong>Following:</strong> {{ get_value(data, 'following') }}</li>
+            <li><strong>Joined Github {{ get_value(data, 'years_since') }} years ago</strong></li>
+            
+            <!-- Timestamps -->
+            <li><strong>Account created on:</strong> {{ get_value(data, 'created_account') }}</li>
+            <li><strong>Last update on:</strong> {{ get_value(data, 'updated_at') }}</li>
+            
+            <!-- Source links -->
+            <li>
+              <a href="{{ get_value(data, 'url') }}" target="_blank" rel="noopener noreferrer">
+                User data source
+              </a>
+            </li>
+            <li>
+              <a href="{{ get_value(data, 'repos_url') }}" target="_blank" rel="noopener noreferrer">
+                Repo data source
+              </a>
+            </li>
+          </ul>
+          
+          <!-- Websites Deployed Section -->
+          <div>
+            <h2 class="pink_styling">Websites Deployed</h2>
+            {% if data.websites_deployed %}
+              <ul>
+                {% for web in data.websites_deployed %}
+                  <li>
+                    <a href="{{ web.url }}" target="_blank" rel="noopener noreferrer">{{ web.name }}</a>
+                  </li>
+                {% endfor %}
+             </ul>
+            {% else %}
+              <p>No websites deployed available.</p>
+            {% endif %}
+          </div>
+        </section>
+      </div> <!-- End .profile_info -->
+
+      <!-- Graphs and Statistics Card -->
+      <section>
+        <h2>Graphs and Statistics</h2>
+        <div class="graphs_grid">
+          {% macro create_graph(dict_obj, key) -%}
+            {%- set graph = dict_obj.get(key) -%}
+            {%- if graph -%}
+            <div style="padding: 10px; text-align: center;">
+              <!-- Clickable Image & Title -->
+              <a href="/graph?username={{ username }}&graph_type={{ graph.graph_type }}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                  <figure>
+                      <img src="{{ graph.img }}" alt="{{ graph.title }} chart" style="max-width: 100%; border-radius: 8px;">
+                      <figcaption style="margin-top: 10px; font-size: 14px; color: #ddd;">
+                          <span style="display: block; margin-bottom: 8px;">{{ graph.title }}, Markdown Usage:</span>
+                      </figcaption>
+                  </figure>
+              </a>
+          
+              <!-- Markdown & Copy Button -->
+              <div style="margin-top: 5px;">
+                  <code id="markdownText" style="background: rgba(255, 255, 255, 0.1); padding: 5px 8px; border-radius: 5px; font-size: 12px; display: inline-block;">
+                      ![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')
+                  </code>
+                  <button onclick="copyMarkdown(event)" data-link="![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')" class="copy-btn button">
+                      📋 Copy
+                  </button>
+                  <span type="text" id="markdownInput" value="![]('{{ request.url_root }}graph?username={{ username }}&graph_type={{ graph.graph_type }}')" readonly style="position: absolute; left: -9999px;"/>
+              </div>
+          </div>
+               
+     
+          
+            {%- endif -%}
+          {%- endmacro %}
+          
+          {{ create_graph(data, 'repos_per_language') }}
+          {{ create_graph(data, 'stars_per_repo') }}
+          {{ create_graph(data, 'stars_per_lang') }}
+          {{ create_graph(data, 'commits_per_repo') }}
+          {{ create_graph(data, 'commits_per_lang') }}
+          {{ create_graph(data, 'commits_in_last_year') }}
+        </div>
+      </section>
+    {% endif %}
+    
+    {% if status and 'message' in status %}
+      <section aria-live="polite">
+        <div>
+          <p>{{ status['message'] }}</p>
+        </div>
+      </section>
+    {% endif %}
+    
+  </main>
+  
+  <!-- Footer Section -->
+  <footer>
+    <p>
+      App made with
+      <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer">Python</a>,
+      <a href="https://flask.palletsprojects.com/en/stable/" target="_blank" rel="noopener noreferrer">Flask</a>,
+      <a href="https://jinja.palletsprojects.com/en/stable/" target="_blank" rel="noopener noreferrer">Jinja</a>,
+      <a href="https://htmx.org/" target="_blank" rel="noopener noreferrer">HTMX</a>, and
+      <a href="http://matplotlib.org/" target="_blank" rel="noopener noreferrer">Matplotlib</a>.
+      Inspired by
+      <a href="https://profile-summary-for-github.com/search" target="_blank" rel="noopener noreferrer">Profile Summary for GitHub</a>
+      and
+      <a href="https://github-profile-summary-cards.vercel.app/" target="_blank" rel="noopener noreferrer">GitHub Profile Summary Cards</a>.
+    </p>
+    <p class="warning">
+      <strong>
+        The server uses a one day cache to not saturate GitHub's API.
+        If you don't see your graph updated in real time, please wait until tomorrow.
+      </strong>
+    </p>
+  </footer>
+</body>
+{% endblock %}
