@@ -1,0 +1,203 @@
+/* Global Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Base Styles */
+body {
+  background-color: #818181;
+  color: #fff;
+  --bg: #000;
+  --hover-bg: #ff90e8;
+  --hover-text: #000;
+  min-height: 100vh;
+  font-size: 20px;
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+/* Use flex for the body, but allow content to flow vertically */
+body.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Ensure main stacks its children vertically */
+main {
+  width: 100%;
+  display: block;
+  padding: 0 1em; /* Mobile horizontal padding */
+}
+
+/* Container for header and user data */
+.profile_info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2em;
+  margin-top: 20px;
+  padding: 0 1em; /* Add horizontal padding on mobile */
+}
+
+/* Grid container for graphs */
+.graphs_grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 20px;
+  padding: 0 1em; /* Mobile horizontal padding */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  /* Remove horizontal padding from main on desktop so containers can center properly */
+  main {
+    padding: 0;
+    max-width: 1400px; /* Optional container constraint for other elements */
+  }
+
+  /* Arrange only the profile info (user-related info) in a row */
+  .profile_info {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 90%;
+    margin: 20px auto;
+    padding: 0;
+  }
+
+  /* Optionally restrict the width of the user data section */
+  .user_data {
+    max-width: 600px;
+  }
+
+  /*
+    Make the .graphs_grid take up the full viewport width so each of
+    the three columns will effectively be 1/3 of the screen.
+  */
+  .graphs_grid {
+    display: grid;
+    /* Force full screen width on desktop */
+    width: 100vw;
+    /*
+      Negative margins center the 100vw element inside its parent
+      if the parent is narrower than the viewport.
+    */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    /* Each column is 1 fraction (so 3 columns => 1/3 of the screen each) */
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1em;
+    /*
+      justify-items: center centers the *contents* of each grid cell
+      (e.g., images). You can adjust this if you want left or right alignment.
+    */
+    justify-items: center;
+    /*
+      justify-content: center ensures the entire grid is centered
+      within its container, but since it's 100vw, it just aligns
+      to the screen anyway.
+    */
+    justify-content: center;
+    padding: 0;
+  }
+
+  .cool_pink_border_neon {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .cool_pink_border_neon img {
+    max-width: 100%;
+    height: auto;
+    padding: 5px; /* Add padding inside borders if desired */
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  
+  
+  
+
+  .button,
+  .input,
+  main {
+    margin: 0 auto;
+  }
+
+  /* On mobile, let the content flow naturally */
+  body.flex {
+    padding-top: 20px;
+    height: auto;
+  }
+
+  main {
+    width: 100%;
+    padding: 0 0.5em; /* Reduced horizontal padding */
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+
+  /* Adjust the element that previously used 100vw */
+  .cool_pink_border_neon {
+    width: 100vw; /* Full viewport width on mobile */
+    margin-left: -0.5em; /* Counteract main padding */
+    margin-right: -0.5em;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  figure {
+    margin: 1px;
+  }
+
+  .cool_pink_border_neon img {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 3px; /* Adjust padding for mobile */
+  }
+
+  .graphs_grid {
+    padding: 0; /* Remove horizontal padding */
+    gap: 0.5em; /* Reduce gap between items */
+  }
+
+  figcaption {
+    font-size: 0.9em; /* Smaller text for mobile */
+    padding: 0 5px;
+  }
+}
+
+.profile_header {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+}
+
+footer > p {
+  padding: 0.5vw;
+  text-align: center;
+}

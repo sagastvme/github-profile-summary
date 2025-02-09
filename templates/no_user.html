@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+  <title>Unexistent user</title>
+  <meta name="description" content="The user {{username}} does not exist in github sorry ">
+
+{% endblock %}
+
+{% block body %}
+<body class="flex">
+    
+    <h1>The user {{username}} doesn't exist in Github, sorry </h1>
+</body>
+
+{% endblock %}

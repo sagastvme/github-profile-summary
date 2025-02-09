@@ -1,0 +1,23 @@
+# Ignore git & version-control stuff
+.git
+.gitignore
+
+# Local environment
+.env
+.vscode
+
+# Virtual environments
+venv
+.venv
+
+# Python caches
+__pycache__
+*.py[cod]
+
+# OS files
+.DS_Store
+
+# Build / distribution cache
+build/
+dist/
+*.egg-info/

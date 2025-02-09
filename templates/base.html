@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/static/minified.css">
+    <link rel="icon" type="image/x-icon" href="/static/icon.ico">
+    <script>
+      function copyMarkdown(event) {
+
+          let markdownText = event.target.getAttribute("data-link");
+  
+    
+          let tempInput = document.createElement("input");
+          tempInput.value = markdownText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          tempInput.setSelectionRange(0, 99999); 
+          document.execCommand("copy");
+  
+          document.body.removeChild(tempInput);
+  
+          let button = event.target;
+          button.innerText = "✅ Copied!";
+          setTimeout(() => button.innerText = "📋 Copy", 1500);
+      }
+  </script>
+  
+    <!-- serve static css -->
+    {% block extra_head %}{% endblock %}
+  </head>
+  {% block body %}{% endblock %}
+</html>
+
