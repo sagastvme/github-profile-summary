@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+
+# VSCode settings
+.vscode/
+
+# Environment variables / secrets
+.env
+
+# OS Files
+.DS_Store
+
+# SQLite DB files (remove if you do want to commit them)
+*.sqlite
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
