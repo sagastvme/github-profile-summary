@@ -35,7 +35,7 @@ This application retrieves a user's public GitHub data (e.g., basic profile info
 Each chart’s code block (Markdown snippet) looks like:
 
 ```
-![]('https://github-summary.duckdns.org/graph?username=YOUR_USERNAME&graph_type=CHART_NAME')
+![]('https://github-summary.work.gd/graph?username=YOUR_USERNAME&graph_type=CHART_NAME')
 ```
 
 - Replace `YOUR_USERNAME` with your actual GitHub username.
